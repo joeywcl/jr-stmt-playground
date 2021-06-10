@@ -1,490 +1,414 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2018-06-11T13:04:28 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="Statements_envelope" pageWidth="720" pageHeight="537" orientation="Landscape" columnWidth="720"
-              leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n"
-              uuid="acce69a6-bc8e-4ab8-be7b-33eef1b57680">
-    <import value="com.wmg.dsp.tango.sg.pdf.*"/>
-    <template><![CDATA["statements_style.jrtx"]]></template>
-    <subDataset name="TaxesNames" uuid="3a72a3c4-0fc2-42cd-ae9d-fe270ff0a1bc">
-        <queryString language="json">
-            <![CDATA[data.envelope_data.tax_data]]>
-        </queryString>
-        <field name="taxAdvice_name" class="java.lang.String">
-            <fieldDescription><![CDATA[taxAdvice_name]]></fieldDescription>
-        </field>
-    </subDataset>
-    <subDataset name="TaxesAmounts" uuid="3a72a3c4-0fc2-42cd-ae9d-fe270ff0a1bd">
-        <queryString language="json">
-            <![CDATA[data.envelope_data.tax_data]]>
-        </queryString>
-        <field name="taxAdvice_amount" class="java.lang.Double">
-            <fieldDescription><![CDATA[taxAdvice_amount]]></fieldDescription>
-        </field>
-        <variable name="NumberFormatter" class="java.text.Format" calculation="System">
-            <initialValueExpression>
-                <![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.00")]]></initialValueExpression>
-        </variable>
-        <variable name="total_taxes" class="java.lang.Double" calculation="Sum">
-            <variableExpression><![CDATA[$F{taxAdvice_amount}]]></variableExpression>
-        </variable>
-    </subDataset>
-    <queryString language="json">
-        <![CDATA[data.envelope_data]]>
-    </queryString>
-    <field name="address_1" class="java.lang.String">
-        <fieldDescription><![CDATA[address_1]]></fieldDescription>
-    </field>
-    <field name="address_2" class="java.lang.String">
-        <fieldDescription><![CDATA[address_2]]></fieldDescription>
-    </field>
-    <field name="address_3" class="java.lang.String">
-        <fieldDescription><![CDATA[address_3]]></fieldDescription>
-    </field>
-    <field name="city_town" class="java.lang.String">
-        <fieldDescription><![CDATA[city_town]]></fieldDescription>
-    </field>
-    <field name="region" class="java.lang.String">
-        <fieldDescription><![CDATA[region]]></fieldDescription>
-    </field>
-    <field name="postal_code" class="java.lang.String">
-        <fieldDescription><![CDATA[postal_code]]></fieldDescription>
-    </field>
-    <field name="country" class="java.lang.String">
-        <fieldDescription><![CDATA[country]]></fieldDescription>
-    </field>
-    <field name="phone_number" class="java.lang.String">
-        <fieldDescription><![CDATA[phone_number]]></fieldDescription>
-    </field>
-    <field name="email" class="java.lang.String">
-        <fieldDescription><![CDATA[email]]></fieldDescription>
-    </field>
-    <field name="name" class="java.lang.String">
-        <fieldDescription><![CDATA[name]]></fieldDescription>
-    </field>
-    <field name="payee_address_1" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_address_1]]></fieldDescription>
-    </field>
-    <field name="payee_address_2" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_address_2]]></fieldDescription>
-    </field>
-    <field name="payee_address_3" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_address_3]]></fieldDescription>
-    </field>
-    <field name="payee_city_town" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_city_town]]></fieldDescription>
-    </field>
-    <field name="payee_region" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_region]]></fieldDescription>
-    </field>
-    <field name="payee_zip_code" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_zip_code]]></fieldDescription>
-    </field>
-    <field name="payee_country" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_country]]></fieldDescription>
-    </field>
-    <field name="payee_name" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_name]]></fieldDescription>
-    </field>
-    <field name="payee_currency" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_currency]]></fieldDescription>
-    </field>
-    <field name="payee_period_start" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_period_start]]></fieldDescription>
-    </field>
-    <field name="payee_period_end" class="java.lang.String">
-        <fieldDescription><![CDATA[payee_period_end]]></fieldDescription>
-    </field>
-    <field name="settlement_date" class="java.lang.String">
-        <fieldDescription><![CDATA[settlement_date]]></fieldDescription>
-    </field>
-    <field name="territorySpecificStatementText" class="java.lang.String">
-        <fieldDescription><![CDATA[territorySpecificStatementText]]></fieldDescription>
-    </field>
-    <field name="account_name" class="java.lang.String">
-        <fieldDescription><![CDATA[account_name]]></fieldDescription>
-    </field>
-    <field name="account_code" class="java.lang.String">
-        <fieldDescription><![CDATA[account_code]]></fieldDescription>
-    </field>
-    <field name="period_no" class="java.lang.String">
-        <fieldDescription><![CDATA[period_no]]></fieldDescription>
-    </field>
-    <field name="vat_number" class="java.lang.String">
-        <fieldDescription><![CDATA[vat_number]]></fieldDescription>
-    </field>
-    <field name="tax_id_number" class="java.lang.String">
-        <fieldDescription><![CDATA[tax_id_number]]></fieldDescription>
-    </field>
-    <field name="company_vat_number" class="java.lang.String">
-        <fieldDescription><![CDATA[company_vat_number]]></fieldDescription>
-    </field>
-    <field name="company_tax_id_number" class="java.lang.String">
-        <fieldDescription><![CDATA[company_tax_id_number]]></fieldDescription>
-    </field>
-    <field name="settlement_period" class="java.lang.String">
-        <fieldDescription><![CDATA[settlement_period]]></fieldDescription>
-    </field>
-    <field name="closing_balance" class="java.lang.Double">
-        <fieldDescription><![CDATA[closing_balance]]></fieldDescription>
-    </field>
-    <variable name="taxes_amount" class="java.lang.Double" incrementType="Report"/>
-    <variable name="NumberFormatter" class="java.text.Format" calculation="System">
-        <initialValueExpression>
-            <![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.00")]]></initialValueExpression>
-    </variable>
-    <detail>
-        <band height="537">
-            <frame>
-                <reportElement x="0" y="0" width="720" height="537" uuid="4a580d60-8a5e-4e55-8a52-b88cde59e162"/>
-                <box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-                    <topPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
-                    <leftPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
-                    <bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
-                    <rightPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
-                </box>
-                <textField>
-                    <reportElement style="B1" x="4" y="10" width="20" height="258"
-                                   uuid="66dadfa1-d553-4a4a-9cc9-db7b1c66019f"/>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[$F{settlement_date}==null?" ":$F{settlement_date}]]></textFieldExpression>
-                </textField>
-                <image>
-                    <reportElement x="25" y="10" width="62" height="46" uuid="b6f394f5-c50c-48e2-98a1-c077fac2bcbd"/>
-                    <imageExpression><![CDATA["WCM_Logo_Statement_Envelope.jpg"]]></imageExpression>
-                </image>
-                <textField>
-                    <reportElement style="B1" x="87" y="10" width="20" height="302"
-                                   uuid="56dadfa1-d553-4a4a-9cc9-db7b1c66019f"/>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{name}==null?"-":$F{name}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="108" y="10" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="2b902c3d-1fd0-492f-b810-9741efb69e8b">
-                        <printWhenExpression><![CDATA[$F{address_1} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression><![CDATA[($F{address_1}==null?"":$F{address_1})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="125" y="10" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="2b902c3d-1fd0-492f-b810-9741efb69e8b">
-                        <printWhenExpression><![CDATA[$F{address_2} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression><![CDATA[($F{address_2}==null?"":$F{address_2})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="141" y="11" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="2b902c3d-1fd0-492f-b811-9741efb69e8b">
-                        <printWhenExpression><![CDATA[$F{address_3} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression><![CDATA[($F{address_3}==null?"":$F{address_3})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="156" y="10" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="6208e761-05f6-46b7-a472-53e4d213b648">
-                        <printWhenExpression>
-                            <![CDATA[$F{city_town} != null || $F{region} != null || $F{postal_code} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[($F{city_town}==null?"":$F{city_town})+ " " + ($F{region}==null?"":$F{region}) + " " + ($F{postal_code}==null?"":$F{postal_code})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="172" y="10" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="ef2ad7ec-426c-46bf-93ad-6d8c9114a8c8">
-                        <printWhenExpression><![CDATA[$F{country} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="87" y="312" width="20" height="214"
-                                   uuid="48b74486-ab42-4c25-8e59-bb9eeab58479">
-                        <property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-                        <property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-                    </reportElement>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{payee_name}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="108" y="268" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="906ad23c-58c0-4145-b047-8ec9e802c0ec">
-                        <printWhenExpression><![CDATA[$F{payee_address_1} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{payee_address_1}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="125" y="268" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="f03ff2ec-1136-466f-9b57-638fa43ecd56">
-                        <printWhenExpression><![CDATA[$F{payee_address_2} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[($F{payee_address_2}==null?"":$F{payee_address_2})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="141" y="268" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="f03ff2ec-1136-466f-9b57-638fa43ecd56">
-                        <printWhenExpression><![CDATA[$F{payee_address_3} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[($F{payee_address_3}==null?"":$F{payee_address_3})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="156" y="268" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="906ad23c-58c0-4145-b047-8ec9e802c0ed">
-                        <printWhenExpression>
-                            <![CDATA[$F{payee_city_town} != null || $F{payee_region} != null || $F{payee_zip_code} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[($F{payee_city_town}==null?"":$F{payee_city_town})+ " " + ($F{payee_region}==null?"":$F{payee_region}) + " " + ($F{payee_zip_code}==null?"":$F{payee_zip_code})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="172" y="268" width="15" height="258" isRemoveLineWhenBlank="true"
-                                   uuid="f03ff2ec-1136-466f-9b57-638fa43ecd57">
-                        <printWhenExpression><![CDATA[$F{payee_country} != null]]></printWhenExpression>
-                    </reportElement>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{payee_country}]]></textFieldExpression>
-                </textField>
-                <frame>
-                    <reportElement mode="Opaque" x="190" y="10" width="60" height="258" backcolor="#F2F2F2"
-                                   uuid="4a580d60-8a5e-4e55-8a52-b88cde59c162"/>
-                    <textField>
-                        <reportElement style="B1" x="11" y="0" width="15" height="247"
-                                       uuid="514124d8-da95-46c5-b7c9-1481507053ba"/>
-                        <textElement rotation="Left"/>
-                        <textFieldExpression>
-                            <![CDATA[Utils.utfFormatter($R{vat_number}) + ": " + $F{company_vat_number}]]></textFieldExpression>
-                    </textField>
-                    <textField>
-                        <reportElement style="B1" x="26" y="0" width="15" height="247"
-                                       uuid="49b77413-fc54-492b-b7cd-c0d144b528f0"/>
-                        <textElement rotation="Left"/>
-                        <textFieldExpression>
-                            <![CDATA[Utils.utfFormatter($R{tax_id_no}) + ": " + $F{company_tax_id_number}]]></textFieldExpression>
-                    </textField>
-                </frame>
-                <frame>
-                    <reportElement mode="Opaque" x="190" y="268" width="60" height="258" backcolor="#F2F2F2"
-                                   uuid="4b580d60-8a5e-4e55-8a52-b88cde59c162"/>
-                    <textField>
-                        <reportElement style="B1" x="11" y="0" width="15" height="247"
-                                       uuid="514124d8-da95-46c5-b7c9-1481507053ba"/>
-                        <textElement rotation="Left"/>
-                        <textFieldExpression>
-                            <![CDATA[Utils.utfFormatter($R{period}) + ": " + $F{payee_period_start} + "-" + $F{payee_period_end}]]></textFieldExpression>
-                    </textField>
-                    <textField>
-                        <reportElement style="B1" x="26" y="0" width="15" height="247"
-                                       uuid="49b77413-fc54-492b-b7cd-c0d144b528f0"/>
-                        <textElement rotation="Left"/>
-                        <textFieldExpression>
-                            <![CDATA[Utils.utfFormatter($R{settlement_period}) + ": " + $F{settlement_period} + " " + Utils.utfFormatter($R{days})]]></textFieldExpression>
-                    </textField>
-                    <textField>
-                        <reportElement style="B1" x="41" y="0" width="15" height="247"
-                                       uuid="49b77413-fc54-492b-b7cd-c0d144b528f1"/>
-                        <textElement rotation="Left"/>
-                        <textFieldExpression>
-                            <![CDATA[Utils.utfFormatter($R{statement_invoice_no}) + ": " + $F{period_no} + "/" + $F{account_code}]]></textFieldExpression>
-                    </textField>
-                </frame>
-                <line>
-                    <reportElement x="260" y="10" width="1" height="517" uuid="2cf302b3-ad41-4128-a8c5-cf7589767a9e"/>
-                    <graphicElement>
-                        <pen lineWidth="0.5"/>
-                    </graphicElement>
-                </line>
-                <textField>
-                    <reportElement style="H2" x="272" y="268" width="20" height="258"
-                                   uuid="8c4b3437-2140-43eb-8be0-3e04d8061002"/>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{account_name}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="292" y="268" width="15" height="258"
-                                   uuid="690f1436-5cf1-4fb2-98be-dc4b732f6490"/>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[Utils.utfFormatter($R{payee_account_code}) + ": " + $F{account_code}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="307" y="268" width="15" height="258"
-                                   uuid="2e8a25c6-7732-4867-989e-be781c4121f0"/>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[Utils.utfFormatter($R{vat_number}) + ": " + $F{vat_number}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="322" y="268" width="15" height="258"
-                                   uuid="aa5a4669-961f-4e10-8a59-94c752a4bec2"/>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[Utils.utfFormatter($R{tax_id_no}) + ": " + $F{tax_id_number}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="350" y="10" width="105" height="517"
-                                   uuid="98fdb8d8-da99-494f-adb5-b932d27510e7"/>
-                    <textElement rotation="Left"/>
-                    <textFieldExpression><![CDATA[$F{territorySpecificStatementText}]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="H2" x="460" y="32" width="20" height="236"
-                                   uuid="36d08614-7f6c-4512-ab42-cd5c7a472bda"/>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression><![CDATA[Utils.utfFormatter($R{tax_calculation})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B2" x="488" y="32" width="20" height="118"
-                                   uuid="ebafcf6e-aa6d-4bb6-87be-c2abd30b9546"/>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[$V{NumberFormatter}.format($F{closing_balance})]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="488" y="150" width="20" height="118"
-                                   uuid="ebafcf6e-aa6d-4bb6-87be-c2abd31c9546"/>
-                    <textElement textAlignment="Left" rotation="Left"/>
-                    <textFieldExpression><![CDATA[Utils.utfFormatter($R{closing_balance})]]></textFieldExpression>
-                </textField>
-                <componentElement>
-                    <reportElement positionType="Float" x="508" y="32" width="160" height="118"
-                                   uuid="83898957-8ce1-4c4e-9f30-bb3df079d8fe"/>
-                    <jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
-                             xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
-                             printOrder="Horizontal">
-                        <datasetRun subDataset="TaxesAmounts" uuid="e53dab72-f682-456b-8dbf-83235528a476">
-                            <datasetParameter name="net.sf.jasperreports.json.source">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.date.pattern">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.number.pattern">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="JSON_LOCALE">
-                                <datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="JSON_TIME_ZONE">
-                                <datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="JSON_INPUT_STREAM">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{JSON_INPUT_STREAM}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.sources">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.sources}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.locale.code">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.locale.code}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.timezone.id">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.timezone.id}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <returnValue fromVariable="total_taxes" toVariable="taxes_amount"/>
-                        </datasetRun>
-                        <jr:listContents height="118" width="20">
-                            <textField isBlankWhenNull="true">
-                                <reportElement style="B1" x="0" y="0" width="20" height="118"
-                                               uuid="f1a22e4f-b527-4a7a-ab48-acb39fb7c951"/>
-                                <textElement textAlignment="Right" rotation="Left"/>
-                                <textFieldExpression>
-                                    <![CDATA[$F{taxAdvice_amount}==null?"-":$V{NumberFormatter}.format($F{taxAdvice_amount})]]></textFieldExpression>
-                            </textField>
-                        </jr:listContents>
-                    </jr:list>
-                </componentElement>
-                <componentElement>
-                    <reportElement positionType="Float" x="508" y="150" width="160" height="118"
-                                   uuid="83598957-8ce1-4c4e-9f30-bb3df079d8fe"/>
-                    <jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
-                             xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
-                             printOrder="Horizontal">
-                        <datasetRun subDataset="TaxesNames" uuid="e53dab73-f682-456b-8dbf-83235528a476">
-                            <datasetParameter name="net.sf.jasperreports.json.source">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.date.pattern">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.number.pattern">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="JSON_LOCALE">
-                                <datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="JSON_TIME_ZONE">
-                                <datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="JSON_INPUT_STREAM">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{JSON_INPUT_STREAM}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.sources">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.sources}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.locale.code">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.locale.code}]]></datasetParameterExpression>
-                            </datasetParameter>
-                            <datasetParameter name="net.sf.jasperreports.json.timezone.id">
-                                <datasetParameterExpression>
-                                    <![CDATA[$P{net.sf.jasperreports.json.timezone.id}]]></datasetParameterExpression>
-                            </datasetParameter>
-                        </datasetRun>
-                        <jr:listContents height="118" width="20">
-                            <textField>
-                                <reportElement style="B2" x="0" y="0" width="20" height="118"
-                                               uuid="123d18cc-3a37-4309-82e0-f678b692b11e"/>
-                                <textElement textAlignment="Left" rotation="Left"/>
-                                <textFieldExpression><![CDATA[$F{taxAdvice_name}]]></textFieldExpression>
-                            </textField>
-                        </jr:listContents>
-                    </jr:list>
-                </componentElement>
-                <textField evaluationTime="Report">
-                    <reportElement style="B2B" x="668" y="32" width="20" height="118"
-                                   uuid="df31ae68-ef7c-4e8a-83ca-148ec2586d9f"/>
-                    <textElement textAlignment="Right" rotation="Left"/>
-                    <textFieldExpression>
-                        <![CDATA[$V{NumberFormatter}.format(($F{closing_balance}==null?0:$F{closing_balance}) + ($V{taxes_amount}==null?0:$V{taxes_amount}))]]></textFieldExpression>
-                </textField>
-                <textField>
-                    <reportElement style="B1" x="668" y="150" width="20" height="118"
-                                   uuid="ebafcf6e-aa6d-4bb6-87be-c2abd30b9546"/>
-                    <textElement textAlignment="Left" rotation="Left"/>
-                    <textFieldExpression><![CDATA[Utils.utfFormatter($R{amount_due})]]></textFieldExpression>
-                </textField>
-                <line>
-                    <reportElement x="690" y="10" width="1" height="517" uuid="2cf302b3-ad41-4128-a8c5-cf7589767a9f"/>
-                    <graphicElement>
-                        <pen lineWidth="0.5"/>
-                    </graphicElement>
-                </line>
-            </frame>
-        </band>
-    </detail>
+<!-- 2021-06-09T19:25:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Statements_envelope" pageWidth="720" pageHeight="537" orientation="Landscape" columnWidth="720" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n" uuid="acce69a6-bc8e-4ab8-be7b-33eef1b57680">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<import value="com.wmg.dsp.tango.sg.pdf.*"/>
+	<template><![CDATA["statements_style.jrtx"]]></template>
+	<subDataset name="TaxesNames" uuid="3a72a3c4-0fc2-42cd-ae9d-fe270ff0a1bc">
+		<queryString language="json">
+			<![CDATA[data.envelope_data.tax_data]]>
+		</queryString>
+		<field name="taxAdvice_name" class="java.lang.String">
+			<fieldDescription><![CDATA[taxAdvice_name]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="TaxesAmounts" uuid="3a72a3c4-0fc2-42cd-ae9d-fe270ff0a1bd">
+		<queryString language="json">
+			<![CDATA[data.envelope_data.tax_data]]>
+		</queryString>
+		<field name="taxAdvice_amount" class="java.lang.Double">
+			<fieldDescription><![CDATA[taxAdvice_amount]]></fieldDescription>
+		</field>
+		<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+			<initialValueExpression><![CDATA[$P{REPORT_LOCALE}]]></initialValueExpression>
+		</variable>
+		<variable name="total_taxes" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{taxAdvice_amount}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<queryString language="json">
+		<![CDATA[data.envelope_data]]>
+	</queryString>
+	<field name="address_1" class="java.lang.String">
+		<fieldDescription><![CDATA[address_1]]></fieldDescription>
+	</field>
+	<field name="address_2" class="java.lang.String">
+		<fieldDescription><![CDATA[address_2]]></fieldDescription>
+	</field>
+	<field name="address_3" class="java.lang.String">
+		<fieldDescription><![CDATA[address_3]]></fieldDescription>
+	</field>
+	<field name="city_town" class="java.lang.String">
+		<fieldDescription><![CDATA[city_town]]></fieldDescription>
+	</field>
+	<field name="region" class="java.lang.String">
+		<fieldDescription><![CDATA[region]]></fieldDescription>
+	</field>
+	<field name="postal_code" class="java.lang.String">
+		<fieldDescription><![CDATA[postal_code]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[country]]></fieldDescription>
+	</field>
+	<field name="phone_number" class="java.lang.String">
+		<fieldDescription><![CDATA[phone_number]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[email]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="payee_address_1" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_address_1]]></fieldDescription>
+	</field>
+	<field name="payee_address_2" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_address_2]]></fieldDescription>
+	</field>
+	<field name="payee_address_3" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_address_3]]></fieldDescription>
+	</field>
+	<field name="payee_city_town" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_city_town]]></fieldDescription>
+	</field>
+	<field name="payee_region" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_region]]></fieldDescription>
+	</field>
+	<field name="payee_zip_code" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_zip_code]]></fieldDescription>
+	</field>
+	<field name="payee_country" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_country]]></fieldDescription>
+	</field>
+	<field name="payee_name" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_name]]></fieldDescription>
+	</field>
+	<field name="payee_currency" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_currency]]></fieldDescription>
+	</field>
+	<field name="payee_period_start" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_period_start]]></fieldDescription>
+	</field>
+	<field name="payee_period_end" class="java.lang.String">
+		<fieldDescription><![CDATA[payee_period_end]]></fieldDescription>
+	</field>
+	<field name="settlement_date" class="java.lang.String">
+		<fieldDescription><![CDATA[settlement_date]]></fieldDescription>
+	</field>
+	<field name="territorySpecificStatementText" class="java.lang.String">
+		<fieldDescription><![CDATA[territorySpecificStatementText]]></fieldDescription>
+	</field>
+	<field name="account_name" class="java.lang.String">
+		<fieldDescription><![CDATA[account_name]]></fieldDescription>
+	</field>
+	<field name="account_code" class="java.lang.String">
+		<fieldDescription><![CDATA[account_code]]></fieldDescription>
+	</field>
+	<field name="period_no" class="java.lang.String">
+		<fieldDescription><![CDATA[period_no]]></fieldDescription>
+	</field>
+	<field name="vat_number" class="java.lang.String">
+		<fieldDescription><![CDATA[vat_number]]></fieldDescription>
+	</field>
+	<field name="tax_id_number" class="java.lang.String">
+		<fieldDescription><![CDATA[tax_id_number]]></fieldDescription>
+	</field>
+	<field name="company_vat_number" class="java.lang.String">
+		<fieldDescription><![CDATA[company_vat_number]]></fieldDescription>
+	</field>
+	<field name="company_tax_id_number" class="java.lang.String">
+		<fieldDescription><![CDATA[company_tax_id_number]]></fieldDescription>
+	</field>
+	<field name="settlement_period" class="java.lang.String">
+		<fieldDescription><![CDATA[settlement_period]]></fieldDescription>
+	</field>
+	<field name="closing_balance" class="java.lang.Double">
+		<fieldDescription><![CDATA[closing_balance]]></fieldDescription>
+	</field>
+	<variable name="taxes_amount" class="java.lang.Double" incrementType="Report"/>
+	<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+		<initialValueExpression><![CDATA[$P{REPORT_LOCALE}]]></initialValueExpression>
+	</variable>
+	<detail>
+		<band height="537">
+			<frame>
+				<reportElement x="0" y="0" width="720" height="537" uuid="4a580d60-8a5e-4e55-8a52-b88cde59e162"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textField>
+					<reportElement style="B1" x="4" y="10" width="20" height="258" uuid="66dadfa1-d553-4a4a-9cc9-db7b1c66019f"/>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{settlement_date}==null?" ":$F{settlement_date}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="25" y="10" width="62" height="46" uuid="b6f394f5-c50c-48e2-98a1-c077fac2bcbd"/>
+					<imageExpression><![CDATA["WCM_Logo_Statement_Envelope.jpg"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement style="B1" x="87" y="10" width="20" height="302" uuid="56dadfa1-d553-4a4a-9cc9-db7b1c66019f"/>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{name}==null?"-":$F{name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="108" y="10" width="15" height="258" isRemoveLineWhenBlank="true" uuid="2b902c3d-1fd0-492f-b810-9741efb69e8b">
+						<printWhenExpression><![CDATA[$F{address_1} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{address_1}==null?"":$F{address_1})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="125" y="10" width="15" height="258" isRemoveLineWhenBlank="true" uuid="2b902c3d-1fd0-492f-b810-9741efb69e8b">
+						<printWhenExpression><![CDATA[$F{address_2} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{address_2}==null?"":$F{address_2})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="141" y="11" width="15" height="258" isRemoveLineWhenBlank="true" uuid="2b902c3d-1fd0-492f-b811-9741efb69e8b">
+						<printWhenExpression><![CDATA[$F{address_3} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{address_3}==null?"":$F{address_3})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="156" y="10" width="15" height="258" isRemoveLineWhenBlank="true" uuid="6208e761-05f6-46b7-a472-53e4d213b648">
+						<printWhenExpression><![CDATA[$F{city_town} != null || $F{region} != null || $F{postal_code} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{city_town}==null?"":$F{city_town})+ " " + ($F{region}==null?"":$F{region}) + " " + ($F{postal_code}==null?"":$F{postal_code})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="172" y="10" width="15" height="258" isRemoveLineWhenBlank="true" uuid="ef2ad7ec-426c-46bf-93ad-6d8c9114a8c8">
+						<printWhenExpression><![CDATA[$F{country} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="87" y="312" width="20" height="214" uuid="48b74486-ab42-4c25-8e59-bb9eeab58479">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{payee_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="108" y="268" width="15" height="258" isRemoveLineWhenBlank="true" uuid="906ad23c-58c0-4145-b047-8ec9e802c0ec">
+						<printWhenExpression><![CDATA[$F{payee_address_1} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{payee_address_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="125" y="268" width="15" height="258" isRemoveLineWhenBlank="true" uuid="f03ff2ec-1136-466f-9b57-638fa43ecd56">
+						<printWhenExpression><![CDATA[$F{payee_address_2} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{payee_address_2}==null?"":$F{payee_address_2})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="141" y="268" width="15" height="258" isRemoveLineWhenBlank="true" uuid="f03ff2ec-1136-466f-9b57-638fa43ecd56">
+						<printWhenExpression><![CDATA[$F{payee_address_3} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{payee_address_3}==null?"":$F{payee_address_3})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="156" y="268" width="15" height="258" isRemoveLineWhenBlank="true" uuid="906ad23c-58c0-4145-b047-8ec9e802c0ed">
+						<printWhenExpression><![CDATA[$F{payee_city_town} != null || $F{payee_region} != null || $F{payee_zip_code} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{payee_city_town}==null?"":$F{payee_city_town})+ " " + ($F{payee_region}==null?"":$F{payee_region}) + " " + ($F{payee_zip_code}==null?"":$F{payee_zip_code})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="172" y="268" width="15" height="258" isRemoveLineWhenBlank="true" uuid="f03ff2ec-1136-466f-9b57-638fa43ecd57">
+						<printWhenExpression><![CDATA[$F{payee_country} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{payee_country}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement mode="Opaque" x="190" y="10" width="60" height="258" backcolor="#F2F2F2" uuid="4a580d60-8a5e-4e55-8a52-b88cde59c162"/>
+					<textField>
+						<reportElement style="B1" x="11" y="0" width="15" height="247" uuid="514124d8-da95-46c5-b7c9-1481507053ba"/>
+						<textElement rotation="Left"/>
+						<textFieldExpression><![CDATA[$R{vat_number} + ": " + $F{company_vat_number}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement style="B1" x="26" y="0" width="15" height="247" uuid="49b77413-fc54-492b-b7cd-c0d144b528f0"/>
+						<textElement rotation="Left"/>
+						<textFieldExpression><![CDATA[$R{tax_id_no} + ": " + $F{company_tax_id_number}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement mode="Opaque" x="190" y="268" width="60" height="258" backcolor="#F2F2F2" uuid="4b580d60-8a5e-4e55-8a52-b88cde59c162"/>
+					<textField>
+						<reportElement style="B1" x="11" y="0" width="15" height="247" uuid="514124d8-da95-46c5-b7c9-1481507053ba"/>
+						<textElement rotation="Left"/>
+						<textFieldExpression><![CDATA[$R{period} + ": " + $F{payee_period_start} + "-" + $F{payee_period_end}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement style="B1" x="26" y="0" width="15" height="247" uuid="49b77413-fc54-492b-b7cd-c0d144b528f0"/>
+						<textElement rotation="Left"/>
+						<textFieldExpression><![CDATA[$R{settlement_period} + ": " + $F{settlement_period} + " " + $R{days}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement style="B1" x="41" y="0" width="15" height="247" uuid="49b77413-fc54-492b-b7cd-c0d144b528f1"/>
+						<textElement rotation="Left"/>
+						<textFieldExpression><![CDATA[$R{statement_invoice_no} + ": " + $F{period_no} + "/" + $F{account_code}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<line>
+					<reportElement x="260" y="10" width="1" height="517" uuid="2cf302b3-ad41-4128-a8c5-cf7589767a9e"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement style="H2" x="272" y="268" width="20" height="258" uuid="8c4b3437-2140-43eb-8be0-3e04d8061002"/>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{account_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="292" y="268" width="15" height="258" uuid="690f1436-5cf1-4fb2-98be-dc4b732f6490"/>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$R{payee_account_code} + ": " + $F{account_code}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="307" y="268" width="15" height="258" uuid="2e8a25c6-7732-4867-989e-be781c4121f0"/>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$R{vat_number} + ": " + $F{vat_number}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="322" y="268" width="15" height="258" uuid="aa5a4669-961f-4e10-8a59-94c752a4bec2"/>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$R{tax_id_no} + ": " + $F{tax_id_number}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="350" y="10" width="105" height="517" uuid="98fdb8d8-da99-494f-adb5-b932d27510e7"/>
+					<textElement rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{territorySpecificStatementText}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="H2" x="460" y="32" width="20" height="236" uuid="36d08614-7f6c-4512-ab42-cd5c7a472bda"/>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[$R{tax_calculation}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B2" x="488" y="32" width="20" height="118" uuid="ebafcf6e-aa6d-4bb6-87be-c2abd30b9546"/>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[$F{closing_balance}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="488" y="150" width="20" height="118" uuid="ebafcf6e-aa6d-4bb6-87be-c2abd31c9546"/>
+					<textElement textAlignment="Left" rotation="Left"/>
+					<textFieldExpression><![CDATA[$R{closing_balance}]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement positionType="Float" x="508" y="32" width="160" height="118" uuid="83898957-8ce1-4c4e-9f30-bb3df079d8fe"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Horizontal">
+						<datasetRun subDataset="TaxesAmounts" uuid="e53dab72-f682-456b-8dbf-83235528a476">
+							<datasetParameter name="net.sf.jasperreports.json.source">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.date.pattern">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.number.pattern">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="JSON_LOCALE">
+								<datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="JSON_TIME_ZONE">
+								<datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="JSON_INPUT_STREAM">
+								<datasetParameterExpression><![CDATA[$P{JSON_INPUT_STREAM}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.sources">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.sources}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.locale.code">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.locale.code}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.timezone.id">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.timezone.id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<returnValue fromVariable="total_taxes" toVariable="taxes_amount"/>
+						</datasetRun>
+						<jr:listContents height="118" width="20">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B1" x="0" y="0" width="20" height="118" uuid="f1a22e4f-b527-4a7a-ab48-acb39fb7c951"/>
+								<textElement textAlignment="Right" rotation="Left"/>
+								<textFieldExpression><![CDATA[$F{taxAdvice_amount}==null?"-":$F{taxAdvice_amount}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement positionType="Float" x="508" y="150" width="160" height="118" uuid="83598957-8ce1-4c4e-9f30-bb3df079d8fe"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Horizontal">
+						<datasetRun subDataset="TaxesNames" uuid="e53dab73-f682-456b-8dbf-83235528a476">
+							<datasetParameter name="net.sf.jasperreports.json.source">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.date.pattern">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.number.pattern">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="JSON_LOCALE">
+								<datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="JSON_TIME_ZONE">
+								<datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="JSON_INPUT_STREAM">
+								<datasetParameterExpression><![CDATA[$P{JSON_INPUT_STREAM}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.sources">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.sources}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.locale.code">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.locale.code}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="net.sf.jasperreports.json.timezone.id">
+								<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.timezone.id}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+						<jr:listContents height="118" width="20">
+							<textField>
+								<reportElement style="B2" x="0" y="0" width="20" height="118" uuid="123d18cc-3a37-4309-82e0-f678b692b11e"/>
+								<textElement textAlignment="Left" rotation="Left"/>
+								<textFieldExpression><![CDATA[$F{taxAdvice_name}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField evaluationTime="Report">
+					<reportElement style="B2B" x="668" y="32" width="20" height="118" uuid="df31ae68-ef7c-4e8a-83ca-148ec2586d9f"/>
+					<textElement textAlignment="Right" rotation="Left"/>
+					<textFieldExpression><![CDATA[($F{closing_balance}==null?0:$F{closing_balance}) + ($V{taxes_amount}==null?0:$V{taxes_amount})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="668" y="150" width="20" height="118" uuid="ebafcf6e-aa6d-4bb6-87be-c2abd30b9546"/>
+					<textElement textAlignment="Left" rotation="Left"/>
+					<textFieldExpression><![CDATA[$R{amount_due}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="690" y="10" width="1" height="517" uuid="2cf302b3-ad41-4128-a8c5-cf7589767a9f"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+			</frame>
+		</band>
+	</detail>
 </jasperReport>

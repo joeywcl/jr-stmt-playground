@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-03T16:28:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Address" pageWidth="258" pageHeight="547" columnWidth="258" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n" uuid="81f97e70-d0c3-4940-a7ff-a1b0be656770">
+    <import value="com.wmg.dsp.tango.sg.pdf.*"/>
+	<template><![CDATA["statements_style.jrtx"]]></template>
+	<queryString language="json">
+		<![CDATA[data.address]]>
+	</queryString>
+	<field name="address_1" class="java.lang.String">
+		<fieldDescription><![CDATA[address_1]]></fieldDescription>
+	</field>
+	<field name="address_2" class="java.lang.String">
+		<fieldDescription><![CDATA[address_2]]></fieldDescription>
+	</field>
+	<field name="address_3" class="java.lang.String">
+		<fieldDescription><![CDATA[address_3]]></fieldDescription>
+	</field>
+	<field name="city_town" class="java.lang.String">
+		<fieldDescription><![CDATA[city_town]]></fieldDescription>
+	</field>
+	<field name="region" class="java.lang.String">
+		<fieldDescription><![CDATA[region]]></fieldDescription>
+	</field>
+	<field name="postal_code" class="java.lang.String">
+		<fieldDescription><![CDATA[postal_code]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[country]]></fieldDescription>
+	</field>
+	<field name="phone_number" class="java.lang.String">
+		<fieldDescription><![CDATA[phone_number]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[email]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="547">
+			<image>
+				<reportElement x="0" y="90" width="185" height="247" uuid="e23b9f02-0848-4867-b6a7-2873c2c224f8"/>
+				<imageExpression><![CDATA["WCM_Logo_Statement.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="H2"  x="0" y="355" width="250" height="30" uuid="1e4c709b-6139-44b9-932b-08dc006a0624"/>
+				<textFieldExpression><![CDATA[$F{name}==null?"-":$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="385" width="250" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0625">
+					<printWhenExpression><![CDATA[$F{address_1} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{address_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="400" width="250" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0626">
+					<printWhenExpression><![CDATA[$F{address_2} != null || $F{address_3} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[($F{address_2}==null?"":$F{address_2})+ " " + ($F{address_3}==null?"":$F{address_3})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="415" width="250" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0627">
+					<printWhenExpression><![CDATA[$F{city_town} != null || $F{region} != null || $F{postal_code} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[($F{city_town}==null?"":$F{city_town})+ " " + ($F{region}==null?"":$F{region}) + " " + ($F{postal_code}==null?"":$F{postal_code})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="430" width="250" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0628">
+					<printWhenExpression><![CDATA[$F{country} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1" x="0" y="445" width="60" height="15" uuid="fb6973e3-2539-4aa9-80c2-8bc855d8c6e6">
+					<printWhenExpression><![CDATA[$F{phone_number} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{phone_number}) + " "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="60" y="445" width="130" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0629">
+					<printWhenExpression><![CDATA[$F{phone_number} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{phone_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="460" width="250" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0620">
+					<printWhenExpression><![CDATA[$F{email} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField hyperlinkType="Reference" hyperlinkTarget="Blank">
+				<reportElement style="H2L" x="0" y="493" width="185" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0621"/>
+				<textFieldExpression><![CDATA["WarnerChappell.com"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA["http://www.WarnerChappell.com"]]></hyperlinkReferenceExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

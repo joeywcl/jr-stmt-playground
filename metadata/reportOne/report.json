@@ -1,0 +1,29 @@
+{
+  "outputDataLocation": "data/reportOne",
+  "extendedMetadata": {
+    "common": {
+      "output.name": "report.pdf",
+	  "report.name": "reportOne",
+      "report.template": "Statements_Landscape.jasper",
+      "datasource.empty": "true",
+      "net.sf.jasperreports.csv.source": "SampleStatementLineData.csv",
+      "net.sf.jasperreports.csv.date.pattern": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+      "net.sf.jasperreports.csv.number.pattern": "##.##",
+      "net.sf.jasperreports.csv.field.delimiter": ",",
+      "net.sf.jasperreports.csv.record.delimiter": "\n",
+      "net.sf.jasperreports.json.source": "data.json",
+      "net.sf.jasperreports.json.date.pattern": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+      "net.sf.jasperreports.json.number.pattern": "##.##"
+    },
+    "locale": {
+      "REPORT_LOCALE": "en_US",
+      "CSV_LOCALE": "en_US",
+      "JSON_LOCALE": "en_US"
+    },
+    "timezone": {
+      "JSON_TIME_ZONE": "GMT",
+      "CSV_TIMEZONE": "GMT",
+      "REPORT_TIME_ZONE": "GMT"
+    }
+  }
+}

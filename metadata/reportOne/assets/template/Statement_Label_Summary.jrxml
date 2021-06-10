@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2018-07-07T12:52:57 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Income_Type_Group_Sumary" pageWidth="720" pageHeight="547" orientation="Landscape" columnWidth="720" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n" uuid="ef66c8a0-0d52-4800-8233-993305fd6c2e">
+    <import value="com.wmg.dsp.tango.sg.pdf.*"/>
+	<template><![CDATA["statements_style.jrtx"]]></template>
+	<parameter name="PeriodStart" class="java.lang.String"/>
+	<parameter name="PeriodEnd" class="java.lang.String"/>
+	<parameter name="Currency" class="java.lang.String"/>
+	<parameter name="PayeeName" class="java.lang.String"/>
+	<queryString language="json">
+		<![CDATA[stmt_label_summary]]>
+	</queryString>
+	<field name="deal_scope_name" class="java.lang.String"/>
+	<field name="deal_contract_brief_number" class="java.lang.String"/>
+    <field name="deal_contracting_parties" class="java.lang.String"/>
+	<field name="amount_paid_less_tax" class="java.lang.Double"/>
+	<field name="withholding_tax" class="java.lang.Double"/>
+	<field name="amount_paid" class="java.lang.Double"/>
+	<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+		<initialValueExpression><![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.000")]]></initialValueExpression>
+	</variable>
+	<variable name="DealGroupNumber" class="java.lang.Integer" resetType="Group" resetGroup="DealNumber" calculation="System">
+		<initialValueExpression><![CDATA[($V{DealGroupNumber} != null)?(Integer.valueOf($V{DealGroupNumber}.intValue() + 1)):(Integer.valueOf(1))]]></initialValueExpression>
+	</variable>
+	<variable name="Sum_Net" class="java.lang.Double" resetType="Group" resetGroup="ScopeName" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount_paid_less_tax}]]></variableExpression>
+	</variable>
+	<variable name="Sum_Gross" class="java.lang.Double" resetType="Group" resetGroup="ScopeName" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount_paid}]]></variableExpression>
+	</variable>
+	<variable name="Withholding_Tax" class="java.lang.Double" resetType="Group" resetGroup="ScopeName" calculation="Sum">
+		<variableExpression><![CDATA[$F{withholding_tax}]]></variableExpression>
+	</variable>
+	<variable name="Total_Net" class="java.lang.Double" resetType="Group" resetGroup="DealNumber" incrementType="Group" incrementGroup="ScopeName" calculation="Sum">
+		<variableExpression><![CDATA[$V{Sum_Net}]]></variableExpression>
+	</variable>
+	<variable name="Total_Gross" class="java.lang.Double" resetType="Group" resetGroup="DealNumber" incrementType="Group" incrementGroup="ScopeName" calculation="Sum">
+		<variableExpression><![CDATA[$V{Sum_Gross}]]></variableExpression>
+	</variable>
+	<variable name="Total_Withholding_Tax" class="java.lang.Double" resetType="Group" resetGroup="DealNumber" incrementType="Group" incrementGroup="ScopeName" calculation="Sum">
+		<variableExpression><![CDATA[$V{Withholding_Tax}]]></variableExpression>
+	</variable>
+	<group name="DealNumber" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{deal_contract_brief_number}]]></groupExpression>
+		<groupHeader>
+			<band height="65">
+				<textField>
+					<reportElement style="H2" x="0" y="18" width="720" height="20" uuid="7a77fedd-f3b1-490c-b9ba-b9b511eed188"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $F{deal_contract_brief_number} + ": " + $F{deal_contracting_parties}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="0" y="45" width="313" height="20" uuid="59536e1b-7e20-4b6d-820f-91d68b4617df"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{scope_name})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="313" y="45" width="147" height="20" uuid="470436e1-2057-4152-9e20-c45f1a6e7001"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{gross_payable})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="460" y="45" width="129" height="20" uuid="eb2335f0-f78a-4d2e-aae6-502a58ab22fe"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{withholding_tax})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="589" y="45" width="129" height="20" uuid="91dee1a3-8265-43d8-a9a7-e4345200756c"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{net_payable})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement style="TH" x="0" y="0" width="313" height="20" uuid="59536e1b-7e20-4b6d-820f-91d68b4617df"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{statement_total})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="313" y="0" width="147" height="20" uuid="470436e1-2057-4152-9e20-c45f1a6e7001"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Total_Gross})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="460" y="0" width="129" height="20" uuid="eb2335f0-f78a-4d2e-aae6-502a58ab22fe"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Total_Withholding_Tax})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="589" y="0" width="129" height="20" uuid="91dee1a3-8265-43d8-a9a7-e4345200756c"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Total_Net})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="ScopeName">
+		<groupExpression><![CDATA[$F{deal_scope_name}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement style="TB1G" x="0" y="0" width="313" height="20" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b1"/>
+					<textFieldExpression><![CDATA[$F{deal_scope_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TN1" x="313" y="0" width="147" height="20" uuid="46507711-ace9-46da-a513-f01f564a40f5"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Sum_Gross})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TN1" x="460" y="0" width="129" height="20" uuid="c843d798-c025-4c3f-aa72-febff14ac8d1"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Withholding_Tax})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TN1" x="589" y="0" width="129" height="20" uuid="9c7b368f-87a7-4779-a842-1fcc64383ce8"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Sum_Net})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="40">
+			<image>
+				<reportElement x="0" y="0" width="30" height="40" uuid="e23b9f02-0848-4867-b6a7-2873c2c224f8"/>
+				<imageExpression><![CDATA["WCM_Logo_Small_Statement.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="B1" x="44" y="0" width="60" height="15" uuid="fb6973e3-2539-4aa9-80c2-8bc855d8c6e6"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{period}) + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="104" y="0" width="80" height="20" uuid="1e4c709b-6139-44b9-932b-08dc006a0624"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PeriodStart} + "-" + $P{PeriodEnd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="44" y="20" width="110" height="15" uuid="fb6973e3-2539-4aa9-80ca-bc855d8c6e67"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{currency_code}) + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="154" y="20" width="30" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0625"/>
+				<textFieldExpression><![CDATA[$P{Currency}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="258" y="0" width="368" height="20" uuid="1e4c709b-6139-44b9-932b-08dc006a0620"/>
+				<textFieldExpression><![CDATA[$P{PayeeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="258" y="20" width="70" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0626"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $F{deal_contract_brief_number} + " -- "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="328" y="20" width="60" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0627"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $V{DealGroupNumber} + " " + Utils.utfFormatter($R{of}) + " "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="B1" x="388" y="20" width="20" height="15" uuid="3aea4311-bd09-4c69-ba36-c5f3dec0ec7f"/>
+				<textFieldExpression><![CDATA[$V{DealGroupNumber}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Master">
+				<reportElement style="B1" x="626" y="20" width="92" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0628"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{MASTER_CURRENT_PAGE} + " " + Utils.utfFormatter($R{of}) + " " + $V{MASTER_TOTAL_PAGES}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="39" width="720" height="1" forecolor="#71767D" uuid="7c89d2d7-464c-4cd5-b266-e481a1fd6a4f"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<line>
+				<reportElement x="252" y="0" width="1" height="30" forecolor="#C1C4CC" uuid="37593ea5-a41a-4314-a686-8a353050be5c"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+</jasperReport>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperTemplate PUBLIC "-//JasperReports//DTD Template//EN" "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperTemplate>
+	<style name="FD" forecolor="#000000"/>
+	<style name="H1" style="FD" fontName="Proxima Nova Semibold" fontSize="32">
+		<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+	</style>
+	<style name="H2" style="FD" fontName="Proxima Nova Semibold" fontSize="11"/>
+	<style name="H2L" style="H2" forecolor="#65B7CD"/>
+	<style name="B1" style="FD" fontName="Proxima Nova Light" fontSize="9">
+    	<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+    </style>
+	<style name="B1T" style="B1">
+		<box padding="2"/>
+	</style>
+	<style name="B1B" style="FD" fontName="Proxima Nova Semibold" fontSize="9">
+		<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+	</style>
+	<style name="B1BT" style="B1B">
+		<box padding="4"/>
+	</style>
+	<style name="B2" style="FD" fontName="Open Sans Light" fontSize="9">
+		<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+	</style>
+	<style name="B2B" style="FD" fontName="Open Sans Semibold" fontSize="9">
+		<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+	</style>
+	<style name="B3" style="FD" fontName="Proxima Nova Light" fontSize="7" isItalic="true">
+		<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+	</style>
+	<style name="B3B" style="FD" fontName="Proxima Nova Semibold" fontSize="7">
+		<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+	</style>
+	<style name="B3BT" style="B3B">
+		<box padding="4"/>
+	</style>
+	<style name="TD" style="FD">
+		<box padding="3">
+			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+			<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+			<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+		</box>
+	</style>
+	<style name="TDD" style="FD">
+		<box padding="2">
+			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+			<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+			<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#D6DCE3"/>
+		</box>
+	</style>    
+	<style name="T1" style="TD" fontName="Proxima Nova Semibold" fontSize="7"/>
+	<style name="TB1" style="TD" fontName="Proxima Nova Light" fontSize="7"/>
+    <style name="TB1D" style="TDD" fontName="Proxima Nova Light" fontSize="7"/>
+	<style name="TB1G" style="TB1">
+		<paragraph leftIndent="14"/>
+	</style>
+    <style name="TB1GD" style="TB1D">
+		<paragraph leftIndent="14"/>
+	</style>
+	<style name="TN1" style="TD" fontName="Open Sans Light" fontSize="7"/>
+    <style name="TN1D" style="TDD" fontName="Open Sans Light" fontSize="7"/>
+	<style name="N1" style="FD" fontName="Open Sans Semibold" fontSize="7"/>
+	<style name="TH" style="T1" mode="Opaque" backcolor="#F2F2F2"/>
+	<style name="TH1" style="TH" fontName="Proxima Nova Light"/>
+	<style name="THN1" style="TH" fontName="Open Sans Light"/>
+	<style name="TH1B" style="TH" fontName="Open Sans Semibold"/>
+	<style name="TN1B" style="TN1" fontName="Open Sans Semibold"/>
+	<style name="N1B" style="N1">
+		<box padding="4"/>
+	</style>
+	<style name="TG" style="TH">
+		<paragraph leftIndent="14"/>
+	</style>
+	<style name="TH1G" style="TG" fontName="Proxima Nova Light"/>
+</jasperTemplate>

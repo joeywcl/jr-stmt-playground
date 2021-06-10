@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2019-10-21T22:51:40 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Statements_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="720" leftMargin="61" rightMargin="61" topMargin="29" bottomMargin="19" resourceBundle="i18n" uuid="ac8f1950-4337-49d9-b51a-e24bcc0a280a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<template><![CDATA["statements_style.jrtx"]]></template>
+	<parameter name="net.sf.jasperreports.json.source" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.json.date.pattern" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.json.number.pattern" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.csv.source" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.csv.encoding" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.csv.date.pattern" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.csv.number.pattern" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.csv.field.delimiter" class="java.lang.String"/>
+	<parameter name="net.sf.jasperreports.csv.record.delimiter" class="java.lang.String"/>
+	<parameter name="ROOT_DIR" class="java.lang.String"/>
+	<parameter name="JSON_LOCALE" class="java.util.Locale"/>
+	<parameter name="JSON_TIME_ZONE" class="java.util.TimeZone"/>
+	<parameter name="CSV_LOCALE" class="java.util.Locale"/>
+	<parameter name="CSV_TIMEZONE" class="java.util.TimeZone"/>
+	<parameter name="PeriodStart" class="java.lang.String"/>
+	<parameter name="PeriodEnd" class="java.lang.String"/>
+	<parameter name="Currency" class="java.lang.String"/>
+	<parameter name="PayeeName" class="java.lang.String"/>
+	<parameter name="PayeeAccountName" class="java.lang.String"/>
+	<parameter name="DealNames" class="java.lang.String"/>
+	<parameter name="PDFCoverPageOnly" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<detail>
+		<band height="537">
+			<subreport>
+				<reportElement x="0" y="0" width="720" height="537" uuid="cc14ca75-7b18-49f8-9baa-a37f1c20f8ec"/>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Statements_envelope.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="547">
+			<subreport>
+				<reportElement x="0" y="0" width="258" height="547" uuid="cc14ca75-7b18-49f8-9baa-a37f1c20f8ea"/>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Address.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="258" y="0" width="462" height="174" uuid="cc14ca75-7b18-49f8-9baa-a37f1c20f8eb"/>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Payee_Address.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="258" y="174" width="462" height="373" uuid="9ca03624-2653-4b22-9e70-2ab8effc7cdc"/>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["General_Ledger.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="547">
+			<subreport>
+				<reportElement x="0" y="0" width="720" height="547" uuid="934de4c4-06fe-437c-8305-eb9295436df7">
+                    <printWhenExpression><![CDATA[$P{PDFCoverPageOnly} != true]]></printWhenExpression>
+                </reportElement>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodStart">
+					<subreportParameterExpression><![CDATA[$P{PeriodStart}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodEnd">
+					<subreportParameterExpression><![CDATA[$P{PeriodEnd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Currency">
+					<subreportParameterExpression><![CDATA[$P{Currency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PayeeName">
+					<subreportParameterExpression><![CDATA[$P{PayeeName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PayeeAccountName">
+					<subreportParameterExpression><![CDATA[$P{PayeeAccountName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DealNames">
+					<subreportParameterExpression><![CDATA[$P{DealNames}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Foreign_Tax_Summary.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="547">
+			<subreport>
+				<reportElement x="0" y="0" width="720" height="547" uuid="934de4c4-06fe-437c-8305-eb9295436df8">
+                    <printWhenExpression><![CDATA[$P{PDFCoverPageOnly} != true]]></printWhenExpression>
+                </reportElement>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CSV_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{CSV_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CSV_TIMEZONE">
+					<subreportParameterExpression><![CDATA[$P{CSV_TIMEZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodStart">
+					<subreportParameterExpression><![CDATA[$P{PeriodStart}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodEnd">
+					<subreportParameterExpression><![CDATA[$P{PeriodEnd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Currency">
+					<subreportParameterExpression><![CDATA[$P{Currency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PayeeName">
+					<subreportParameterExpression><![CDATA[$P{PayeeName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Income_Type_Group_Summary.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="547">
+			<subreport>
+				<reportElement x="0" y="0" width="720" height="547" uuid="934de4c4-06fe-437c-8305-eb9295436df9">
+                    <printWhenExpression><![CDATA[$P{PDFCoverPageOnly} != true]]></printWhenExpression>
+                </reportElement>
+				<subreportParameter name="net.sf.jasperreports.json.source">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.json.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{JSON_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="JSON_TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodStart">
+					<subreportParameterExpression><![CDATA[$P{PeriodStart}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodEnd">
+					<subreportParameterExpression><![CDATA[$P{PeriodEnd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Currency">
+					<subreportParameterExpression><![CDATA[$P{Currency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PayeeName">
+					<subreportParameterExpression><![CDATA[$P{PayeeName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Statement_Label_Summary.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="547">
+			<subreport>
+				<reportElement x="0" y="0" width="720" height="547" uuid="934de4c4-06fe-437c-8305-eb9295436df0">
+					<printWhenExpression><![CDATA[$P{PDFCoverPageOnly} != true]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="CSV_FILE">
+					<subreportParameterExpression><![CDATA[new java.io.File($P{ROOT_DIR}+$P{net.sf.jasperreports.csv.source})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.csv.encoding">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.csv.encoding}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CSV_USE_FIRST_ROW_AS_HEADER">
+					<subreportParameterExpression><![CDATA[true]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.csv.date.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.csv.date.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.csv.number.pattern">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.csv.number.pattern}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.csv.field.delimiter">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.csv.field.delimiter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="net.sf.jasperreports.csv.record.delimiter">
+					<subreportParameterExpression><![CDATA[$P{net.sf.jasperreports.csv.record.delimiter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CSV_LOCALE">
+					<subreportParameterExpression><![CDATA[$P{CSV_LOCALE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CSV_TIMEZONE">
+					<subreportParameterExpression><![CDATA[$P{CSV_TIMEZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodStart">
+					<subreportParameterExpression><![CDATA[$P{PeriodStart}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PeriodEnd">
+					<subreportParameterExpression><![CDATA[$P{PeriodEnd}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Currency">
+					<subreportParameterExpression><![CDATA[$P{Currency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PayeeName">
+					<subreportParameterExpression><![CDATA[$P{PayeeName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportExpression><![CDATA["Income_Line_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

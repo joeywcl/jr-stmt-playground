@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-24T13:53:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Income_Line_Details" pageWidth="720" pageHeight="547" orientation="Landscape" columnWidth="720" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n" scriptletClass="IncomeLinesScriptlet" uuid="1cc2b60f-54a8-430e-98e1-b652cf6ab5a2">
+	<import value="com.wmg.dsp.tango.sg.pdf.*"/>
+    <template><![CDATA["statements_style.jrtx"]]></template>
+	<parameter name="PeriodStart" class="java.lang.String"/>
+	<parameter name="PeriodEnd" class="java.lang.String"/>
+	<parameter name="Currency" class="java.lang.String"/>
+	<parameter name="PayeeName" class="java.lang.String"/>
+	<queryString language="csv">
+		<![CDATA[]]>
+	</queryString>
+	<field name="deal_scope_name" class="java.lang.String"/>
+	<field name="deal_contract_brief_number" class="java.lang.String"/>
+    <field name="deal_contracting_parties" class="java.lang.String"/>
+	<field name="tango_work_title" class="java.lang.String"/>
+	<field name="creator_names" class="java.lang.String"/>
+	<field name="processing_territory_name" class="java.lang.String"/>
+	<field name="tango_income_type_name" class="java.lang.String"/>
+	<field name="statement_id" class="java.lang.Long"/>
+	<field name="distribution_start_short" class="java.lang.String"/>
+	<field name="distribution_end_short" class="java.lang.String"/>
+	<field name="income_provider_name" class="java.lang.String"/>
+	<field name="source_territory_name" class="java.lang.String"/>
+	<field name="exploitation_source" class="java.lang.String"/>
+	<field name="product_description" class="java.lang.String"/>
+	<field name="units" class="java.lang.Long"/>
+	<field name="rate_percentage" class="java.lang.Double"/>
+	<field name="rate_application_method_code" class="java.lang.String"/>
+	<field name="amount_paid" class="java.lang.Double"/>
+	<field name="amount_received" class="java.lang.Double"/>
+	<sortField name="deal_contract_brief_number"/>
+	<sortField name="deal_scope_name"/>
+	<sortField name="tango_work_title"/>
+	<sortField name="processing_territory_name"/>
+	<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+		<initialValueExpression><![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.000")]]></initialValueExpression>
+	</variable>
+	<variable name="DealGroupNumber" class="java.lang.Integer" resetType="Group" resetGroup="DealNumber" calculation="System">
+		<initialValueExpression><![CDATA[($V{DealGroupNumber} != null)?(Integer.valueOf($V{DealGroupNumber}.intValue() + 1)):(Integer.valueOf(1))]]></initialValueExpression>
+	</variable>
+	<variable name="ScopeNameChanged" class="java.lang.Boolean" incrementType="Page" resetType="Group" resetGroup="ScopeName">
+		<variableExpression><![CDATA[false]]></variableExpression>
+		<initialValueExpression><![CDATA[true]]></initialValueExpression>
+	</variable>
+	<variable name="TerritoryContinue" class="java.lang.Boolean" incrementType="Page" resetType="Group" resetGroup="Territory">
+		<variableExpression><![CDATA[true]]></variableExpression>
+		<initialValueExpression><![CDATA[false]]></initialValueExpression>
+	</variable>
+	<variable name="ShowSource" class="java.lang.Boolean" incrementType="Page" resetType="Page" calculation="System">
+		<initialValueExpression><![CDATA[false]]></initialValueExpression>
+	</variable>    
+    <variable name="units_sum" class="java.lang.Integer" resetType="Group" resetGroup="Details" calculation="Sum">
+        <variableExpression><![CDATA[$F{units}]]></variableExpression>
+    </variable>
+	<variable name="amount_paid_sum" class="java.lang.Double" resetType="Group" resetGroup="Details" calculation="Sum">
+        <variableExpression><![CDATA[$F{amount_paid}]]></variableExpression>
+    </variable>
+	<variable name="amount_received_sum" class="java.lang.Double" resetType="Group" resetGroup="Details" calculation="Sum">
+        <variableExpression><![CDATA[$F{amount_received}]]></variableExpression>
+    </variable>
+	<variable name="Sum_Net" class="java.lang.Double" resetType="Group" resetGroup="Territory" incrementType="Group" incrementGroup="Details" calculation="Sum">
+		<variableExpression><![CDATA[$V{amount_paid_sum}]]></variableExpression>
+	</variable>
+	<variable name="Sum_Gross" class="java.lang.Double" resetType="Group" resetGroup="Territory" incrementType="Group" incrementGroup="Details" calculation="Sum">
+		<variableExpression><![CDATA[$V{amount_received_sum}]]></variableExpression>
+	</variable>
+	<variable name="Total_Net" class="java.lang.Double" resetType="Group" resetGroup="WorkTitle" incrementType="Group" incrementGroup="Territory" calculation="Sum">
+		<variableExpression><![CDATA[$V{Sum_Net}]]></variableExpression>
+	</variable>
+	<variable name="Total_Gross" class="java.lang.Double" resetType="Group" resetGroup="WorkTitle" incrementType="Group" incrementGroup="Territory" calculation="Sum">
+		<variableExpression><![CDATA[$V{Sum_Gross}]]></variableExpression>
+	</variable>
+	<variable name="Summary_Net" class="java.lang.Double" resetType="Group" resetGroup="DealNumber" incrementType="Group" incrementGroup="WorkTitle" calculation="Sum">
+		<variableExpression><![CDATA[$V{Total_Net}]]></variableExpression>
+	</variable>
+	<variable name="Summary_Gross" class="java.lang.Double" resetType="Group" resetGroup="DealNumber" incrementType="Group" incrementGroup="WorkTitle" calculation="Sum">
+		<variableExpression><![CDATA[$V{Total_Gross}]]></variableExpression>
+	</variable>
+	<group name="DealNumber" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{deal_contract_brief_number}]]></groupExpression>
+		<groupFooter>
+			<band height="38">
+				<textField>
+					<reportElement style="B3BT" x="447" y="18" width="100" height="20" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{statement_total})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="N1B" x="531" y="18" width="36" height="20" uuid="91dee1a3-8265-43d8-a9a7-e4345200758e"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="N1B" x="567" y="18" width="55" height="20" uuid="59536e1b-7e20-4b6d-821f-91d68b4617ef"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Summary_Gross})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="N1B" x="622" y="18" width="43" height="20" uuid="59536e1b-7e20-4b6d-822f-91d68b4616ef"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="N1B" x="665" y="18" width="55" height="20" uuid="59536e1b-7e20-4b6d-823f-91d68b4614ef"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Summary_Net})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="ScopeName" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{deal_scope_name}]]></groupExpression>
+		<groupHeader>
+			<band height="55">
+			    <printWhenExpression><![CDATA[$V{ScopeNameChanged}]]></printWhenExpression>
+				<textField>
+					<reportElement style="H2" x="0" y="18" width="720" height="20" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b1"/>
+					<textFieldExpression><![CDATA[$F{deal_scope_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="B1" x="0" y="38" width="720" height="15" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b2"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $F{deal_contract_brief_number} + ": " + $F{deal_contracting_parties}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="28">
+				<textField>
+					<reportElement style="TH" x="0" y="0" width="92" height="28" uuid="470436e1-2057-4152-9e20-c45f1a6e7001"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{income_type})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="92" y="0" width="49" height="28" uuid="eb2335f0-f78a-4d2e-aae6-502a58ab22fe"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{statement_id})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="141" y="0" width="49" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200756c"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{distribution_period})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="190" y="0" width="92" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200756d"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{income_provider})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="282" y="0" width="73" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200756e"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{exploitation_country})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="355" y="0" width="92" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200756f"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{exploitation_source})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="447" y="0" width="84" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200757e"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{product_description})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="531" y="0" width="36" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200757e"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{units})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="567" y="0" width="55" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200758e"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{amount_received})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="622" y="0" width="43" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200759e"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{royalty_rate})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="665" y="0" width="55" height="28" uuid="91dee1a3-8265-43d8-a9a7-e4345200760e"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Utils.utfFormatter($R{amount_paid})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="WorkTitle" minHeightToStartNewPage="100" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{tango_work_title}]]></groupExpression>
+		<groupHeader>
+			<band height="28">
+				<textField  isStretchWithOverflow="true">
+					<reportElement style="B1BT" x="0" y="0" width="172" height="28" stretchType="RelativeToTallestObject" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b3"/>
+					<box>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6DCE3"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tango_work_title}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="B1BT" x="172" y="0" width="18" height="28" stretchType="RelativeToTallestObject" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b5"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[-]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="B1T" x="190" y="0" width="295" height="28" stretchType="RelativeToTallestObject" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b4"/>
+                    <textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{creator_names}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="B3BT" x="485" y="0" width="46" height="28" stretchType="RelativeToTallestObject" uuid="5de2057b-1695-4e96-8fa0-14d793bc60b6"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Sub-total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="N1B" x="531" y="0" width="36" height="28" stretchType="RelativeToTallestObject" uuid="91dee1a3-8265-43d8-a9a7-e4345200757e"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="WorkTitle">
+					<reportElement style="N1B" x="567" y="0" width="55" height="28" stretchType="RelativeToTallestObject" uuid="59536e1b-7e20-4b6d-821f-91d68b4616ef"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Total_Gross})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="N1B" x="622" y="0" width="43" height="28" stretchType="RelativeToTallestObject" uuid="59536e1b-7e20-4b6d-822f-91d68b4615ef"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="WorkTitle">
+					<reportElement style="N1B" x="665" y="0" width="55" height="28" stretchType="RelativeToTallestObject" uuid="59536e1b-7e20-4b6d-823f-91d68b4614ef"/>
+                    <box>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6DCE3"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Total_Net})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Territory" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{processing_territory_name}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<textField>
+					<reportElement style="TG" x="0" y="0" width="567" height="18" uuid="59536e1b-7e20-4b6d-820f-91d68b4617ef"/>
+					<textFieldExpression><![CDATA[$F{processing_territory_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="TH" x="110" y="0" width="467" height="18" uuid="5f533e26-72bd-4d78-a369-392b29b4d83f">
+						<printWhenExpression><![CDATA[$V{TerritoryContinue}]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<leftPen lineWidth="0.0"/>
+					</box>
+					<text><![CDATA[(continued)]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="Territory">
+					<reportElement style="TH1B" x="567" y="0" width="55" height="18" uuid="59536e1b-7e20-4b6d-820f-91d68b4616ef"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Sum_Gross})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="TH" x="622" y="0" width="43" height="18" uuid="59536e1b-7e20-4b6d-820f-91d68b4615ef"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="Territory">
+					<reportElement style="TH1B" x="665" y="0" width="55" height="18" uuid="59536e1b-7e20-4b6d-820f-91d68b4614ef"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{Sum_Net})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+    <group name="Details">
+        <groupExpression><![CDATA[$F{tango_income_type_name} + $F{statement_id} + $F{income_provider_name} + $F{source_territory_name} + $F{exploitation_source} + $F{product_description} + $F{rate_percentage} + $F{rate_application_method_code}]]></groupExpression>
+        <groupHeader>
+            <band height="14">
+                <!--<printWhenExpression><![CDATA[$V{amount_paid_sum} > 0]]></printWhenExpression>-->
+                <textField>
+					<reportElement style="TB1D" positionType="Float" x="0" y="0" width="92" height="14" uuid="470436e1-3057-4152-9e20-c45f1a6e7001"/>
+                    <textFieldExpression><![CDATA[$F{tango_income_type_name}]]></textFieldExpression>
+                </textField>
+                <textField>
+					<reportElement style="TB1D" positionType="Float" x="92" y="0" width="49" height="14" uuid="eb2335f0-f79a-4d2e-aae6-502a58ab22fe"/>
+                    <textFieldExpression><![CDATA[$F{statement_id}]]></textFieldExpression>
+                </textField>
+                <textField>
+					<reportElement style="TB1D" positionType="Float" x="141" y="0" width="49" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200756c"/>
+                    <textElement textAlignment="Right"/>
+                    <textFieldExpression><![CDATA[$F{distribution_start_short} + "-" + $F{distribution_end_short}]]></textFieldExpression>
+                </textField>
+                <textField>
+					<reportElement style="TB1D" positionType="Float" x="190" y="0" width="92" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200756d"/>
+                    <textFieldExpression><![CDATA[$F{income_provider_name}]]></textFieldExpression>
+                </textField>
+                <textField>
+				<reportElement style="TB1D" positionType="Float" x="282" y="0" width="73" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200756e"/>
+                    <textFieldExpression><![CDATA[$F{source_territory_name}]]></textFieldExpression>
+                </textField>
+                <textField>
+					<reportElement style="TB1D" positionType="Float" x="355" y="0" width="92" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200756f"/>
+                    <textFieldExpression><![CDATA[$F{exploitation_source}]]></textFieldExpression>
+                </textField>
+                <textField>
+					<reportElement style="TB1D" positionType="Float" x="447" y="0" width="84" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200757e"/>
+                    <textFieldExpression><![CDATA[$F{product_description}]]></textFieldExpression>
+                </textField>
+                <textField evaluationTime="Group" evaluationGroup="Details">
+                    <reportElement style="TB1D" positionType="Float" x="531" y="0" width="36" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200757e"/>
+                    <textFieldExpression><![CDATA[$V{units_sum}]]></textFieldExpression>
+                </textField>
+                <textField evaluationTime="Group" evaluationGroup="Details">
+                    <reportElement style="TB1D" positionType="Float" x="567" y="0" width="55" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200758e"/>
+                    <textElement textAlignment="Right"/>
+                    <textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{amount_received_sum})]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement style="TB1D" positionType="Float" x="622" y="0" width="43" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200759e"/>
+                    <textFieldExpression><![CDATA[$V{NumberFormatter}.format($F{rate_percentage}) + ("SOURCE".equals($F{rate_application_method_code}) ? "@" : "")]]></textFieldExpression>
+                </textField>
+                <textField evaluationTime="Group" evaluationGroup="Details">
+                    <reportElement style="TB1D" positionType="Float" x="665" y="0" width="55" height="14" uuid="91dee1a3-8365-43d8-a9a7-e4345200760e"/>
+                    <textElement textAlignment="Right"/>
+                    <textFieldExpression><![CDATA[$V{NumberFormatter}.format($V{amount_paid_sum})]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+    </group>
+	<pageHeader>
+		<band height="40">
+			<image>
+				<reportElement x="0" y="0" width="30" height="40" uuid="e23b9f02-0848-4867-b6a7-2873c2c224f8"/>
+				<imageExpression><![CDATA["WCM_Logo_Small_Statement.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="B1" x="44" y="0" width="60" height="15" uuid="fb6973e3-2539-4aa9-80c2-8bc855d8c6e6"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{period}) + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="104" y="0" width="80" height="20" uuid="1e4c709b-6139-44b9-932b-08dc006a0620"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PeriodStart} + "-" + $P{PeriodEnd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="44" y="20" width="110" height="15" uuid="fb6973e3-2539-4aa9-80ca-bc855d8c6e67"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{currency_code}) + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="154" y="20" width="30" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0625"/>
+				<textFieldExpression><![CDATA[$P{Currency}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="258" y="0" width="368" height="20" uuid="1e4c709b-6139-44b9-932b-08dc006a0624"/>
+				<textFieldExpression><![CDATA[$P{PayeeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="258" y="20" width="70" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0626"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $F{deal_contract_brief_number} + " -- "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="328" y="20" width="60" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0627"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $V{DealGroupNumber} + " " + Utils.utfFormatter($R{of}) + " "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="B1" x="388" y="20" width="20" height="15" uuid="3aea4311-bd09-4c69-ba36-c5f3dec0ec7f"/>
+				<textFieldExpression><![CDATA[$V{DealGroupNumber}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Master">
+				<reportElement style="B1" x="626" y="20" width="92" height="15" uuid="1e4c709b-6139-44b9-932b-08dc006a0628"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{MASTER_CURRENT_PAGE} + " " + Utils.utfFormatter($R{of}) + " " + $V{MASTER_TOTAL_PAGES}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="39" width="720" height="1" forecolor="#71767D" uuid="7c89d2d7-464c-4cd5-b266-e481a1fd6a4f"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<line>
+				<reportElement x="252" y="0" width="1" height="30" forecolor="#C1C4CC" uuid="37593ea5-a41a-4314-a686-8a353050be5c"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement style="B1" x="622" y="5" width="98" height="15" uuid="92dee1a3-8265-43d8-a9a7-e4345200759e">
+                    <printWhenExpression><![CDATA[$V{ShowSource}]]></printWhenExpression>
+                </reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["@ = " + Utils.utfFormatter($R{at_source})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

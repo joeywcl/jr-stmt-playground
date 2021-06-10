@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-03T16:29:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Addresses" pageWidth="462" pageHeight="174" columnWidth="462" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n" uuid="22cb6686-5e97-420f-8a08-a007541bcd0d">
+	<import value="com.wmg.dsp.tango.sg.pdf.*"/>
+    <template><![CDATA["statements_style.jrtx"]]></template>
+	<queryString language="json">
+		<![CDATA[data.payee_address]]>
+	</queryString>
+	<field name="address_1" class="java.lang.String">
+		<fieldDescription><![CDATA[address_1]]></fieldDescription>
+	</field>
+	<field name="address_2" class="java.lang.String">
+		<fieldDescription><![CDATA[address_2]]></fieldDescription>
+	</field>
+	<field name="address_3" class="java.lang.String">
+		<fieldDescription><![CDATA[address_3]]></fieldDescription>
+	</field>
+	<field name="city_town" class="java.lang.String">
+		<fieldDescription><![CDATA[city_town]]></fieldDescription>
+	</field>
+	<field name="region" class="java.lang.String">
+		<fieldDescription><![CDATA[region]]></fieldDescription>
+	</field>
+	<field name="zip_code" class="java.lang.String">
+		<fieldDescription><![CDATA[zip_code]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[country]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="currency" class="java.lang.String">
+		<fieldDescription><![CDATA[currency]]></fieldDescription>
+	</field>
+	<field name="period_start" class="java.lang.String">
+		<fieldDescription><![CDATA[period_start]]></fieldDescription>
+	</field>
+	<field name="period_end" class="java.lang.String">
+		<fieldDescription><![CDATA[period_end]]></fieldDescription>
+	</field>
+	<title>
+		<band height="90">
+			<textField>
+				<reportElement style="H1" x="0" y="0" width="462" height="90" uuid="6f9ea9cb-0716-4b54-8f17-f3c9d54a6f53"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="84">
+			<line>
+				<reportElement x="0" y="0" width="462" height="1" uuid="49fbc0f8-de7c-496f-a111-220145aa5194"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="18" width="202" height="15" uuid="2ab2cbc2-41ec-4509-8946-fbd03aae5e79">
+					<printWhenExpression><![CDATA[$F{address_1} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{address_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="33" width="202" height="15" uuid="c7f2e91e-c2f0-4a4a-98d6-2a4c875604b9">
+					<printWhenExpression><![CDATA[$F{address_2} != null || $F{address_3} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[($F{address_2}==null?"":$F{address_2})+ " " + ($F{address_3}==null?"":$F{address_3})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="48" width="202" height="15" uuid="9acfa2f3-8a80-4d4c-8c16-4a561a504f82">
+					<printWhenExpression><![CDATA[$F{city_town} != null || $F{region} != null || $F{zip_code} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[($F{city_town}==null?"":$F{city_town})+ " " + ($F{region}==null?"":$F{region}) + " " + ($F{zip_code}==null?"":$F{zip_code})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isRemoveLineWhenBlank="true" style="B1"  x="0" y="63" width="202" height="15" uuid="62d32aa6-3c87-4273-82a4-046e7a8d00e6">
+					<printWhenExpression><![CDATA[$F{country} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="276" y="18" width="60" height="15" uuid="fb6973e3-2539-4aa9-80c2-8bc855d8c6e6"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{period}) + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1"  x="336" y="18" width="124" height="15" uuid="8d4e22f5-5c04-43ea-920a-5b39f0b8e0f7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{period_start} + "-" + $F{period_end}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="276" y="33" width="110" height="15" uuid="fb6973e3-2539-4aa9-80ca-bc855d8c6e67"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{currency_code}) + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1"  x="386" y="33" width="74" height="15" uuid="fe3006ff-dbb3-4f72-a096-fbc65bbbb0ad"/>
+				<textFieldExpression><![CDATA[$F{currency}==null?"-":$F{currency}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

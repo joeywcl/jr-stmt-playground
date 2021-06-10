@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-03T22:01:29 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="General_Ledger" pageWidth="462" pageHeight="373" orientation="Landscape" columnWidth="462" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="i18n" uuid="7eb4f90c-6dcd-48f3-925b-4f49dd1e071c">
+	<import value="com.wmg.dsp.tango.sg.pdf.*"/>
+    <template><![CDATA["statements_style.jrtx"]]></template>
+	<subDataset name="PaymentAmount" uuid="b369cdcf-8bb3-4941-bc43-3ba6b35c5470">
+		<queryString language="json">
+			<![CDATA[data.general_ledger.paymentAmount]]>
+		</queryString>
+		<field name="paymentAmount_name" class="java.lang.String">
+			<fieldDescription><![CDATA[paymentAmount_name]]></fieldDescription>
+		</field>
+		<field name="paymentAmount_date" class="java.util.Date">
+			<fieldDescription><![CDATA[paymentAmount_date]]></fieldDescription>
+		</field>
+		<field name="paymentAmount_amount" class="java.lang.Double">
+			<fieldDescription><![CDATA[paymentAmount_amount]]></fieldDescription>
+		</field>
+		<variable name="DateFormatter" class="java.text.DateFormat" calculation="System">
+			<initialValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy-MM-dd")]]></initialValueExpression>
+		</variable>
+		<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+			<initialValueExpression><![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.00")]]></initialValueExpression>
+		</variable>
+		<variable name="total_paymentAmount" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{paymentAmount_amount}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="Advances" uuid="b369cdcf-8bb3-4941-bc43-3ba6b35c5470">
+		<queryString language="json">
+			<![CDATA[data.general_ledger.advances]]>
+		</queryString>
+		<field name="advances_name" class="java.lang.String">
+			<fieldDescription><![CDATA[advances_name]]></fieldDescription>
+		</field>
+		<field name="advances_date" class="java.util.Date">
+			<fieldDescription><![CDATA[advances_date]]></fieldDescription>
+		</field>
+		<field name="advances_amount" class="java.lang.Double">
+			<fieldDescription><![CDATA[advances_amount]]></fieldDescription>
+		</field>
+		<variable name="DateFormatter" class="java.text.DateFormat" calculation="System">
+			<initialValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy-MM-dd")]]></initialValueExpression>
+		</variable>
+		<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+			<initialValueExpression><![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.00")]]></initialValueExpression>
+		</variable>
+		<variable name="total_advances" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{advances_amount}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="Adjustments" uuid="3a72a3c4-0fc1-42cd-ae9d-fe270ff0a1bc">
+		<queryString language="json">
+			<![CDATA[data.general_ledger.adjustments]]>
+		</queryString>
+		<field name="adjustments_name" class="java.lang.String">
+			<fieldDescription><![CDATA[adjustments_name]]></fieldDescription>
+		</field>
+		<field name="adjustments_date" class="java.util.Date">
+			<fieldDescription><![CDATA[adjustments_date]]></fieldDescription>
+		</field>
+		<field name="adjustments_amount" class="java.lang.Double">
+			<fieldDescription><![CDATA[adjustments_amount]]></fieldDescription>
+		</field>
+		<variable name="DateFormatter" class="java.text.DateFormat" calculation="System">
+			<initialValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy-MM-dd")]]></initialValueExpression>
+		</variable>
+		<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+			<initialValueExpression><![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.00")]]></initialValueExpression>
+		</variable>
+		<variable name="total_adjustments" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{adjustments_amount}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<queryString language="json">
+		<![CDATA[data.general_ledger]]>
+	</queryString>
+	<field name="account_name" class="java.lang.String">
+		<fieldDescription><![CDATA[account_name]]></fieldDescription>
+	</field>
+	<field name="account_code" class="java.lang.String">
+		<fieldDescription><![CDATA[account_code]]></fieldDescription>
+	</field>
+	<field name="deal_names" class="java.lang.String">
+		<fieldDescription><![CDATA[deal_names]]></fieldDescription>
+	</field>
+	<field name="opening_balance_date" class="java.util.Date">
+		<fieldDescription><![CDATA[openingBalance_date]]></fieldDescription>
+	</field>
+	<field name="closing_balance_date" class="java.util.Date">
+		<fieldDescription><![CDATA[closingBalance_date]]></fieldDescription>
+	</field>
+	<field name="opening_balance_amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[openingBalance_amount]]></fieldDescription>
+	</field>
+	<field name="closing_balance_amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[closingBalance_amount]]></fieldDescription>
+	</field>
+	<field name="gross_amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[grossPayableRoyalties_amount]]></fieldDescription>
+	</field>
+	<field name="gross_date" class="java.util.Date">
+		<fieldDescription><![CDATA[grossPayableRoyalties_date]]></fieldDescription>
+	</field>
+	<field name="withholding_tax_amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[withholdingTax_amount]]></fieldDescription>
+	</field>
+	<field name="withholding_tax_date" class="java.util.Date">
+		<fieldDescription><![CDATA[withholdingTax_date]]></fieldDescription>
+	</field>
+	<variable name="DateFormatter" class="java.text.DateFormat" calculation="System">
+		<initialValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy-MM-dd")]]></initialValueExpression>
+	</variable>
+	<variable name="NumberFormatter" class="java.text.Format" calculation="System">
+		<initialValueExpression><![CDATA[Utils.getDecimalFormatter($P{REPORT_LOCALE},"#,##0.00")]]></initialValueExpression>
+	</variable>
+    <variable name="paymentAmount" class="java.lang.Double" incrementType="Report"/>
+	<variable name="advances" class="java.lang.Double" incrementType="Report"/>
+	<variable name="adjustments" class="java.lang.Double" incrementType="Report"/>
+	<detail>
+		<band height="373">
+			<textField>
+				<reportElement style="H2"  x="0" y="0" width="462" height="20" uuid="4f324e9c-0cac-40f1-be3c-a9ef7204078b"/>
+				<textFieldExpression><![CDATA[$F{account_name} + " - " + Utils.utfFormatter($R{account_transactions_and_balances})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1" x="0" y="20" width="100" height="15" uuid="1b635694-6de1-4d8a-b961-001d92540c89"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{payee_account_code})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1"  x="100" y="20" width="362" height="15" uuid="4f324e9c-0cac-40f1-be3c-a9ef7204079b"/>
+				<textFieldExpression><![CDATA[$F{account_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="B1"  x="0" y="35" width="462" height="15" uuid="4f324e9c-0cac-40f1-be3c-a9ef7204079c"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{deal}) + " " + $F{deal_names}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="50" width="462" height="1" uuid="2e60c1e2-e636-49ba-af1c-c145832f5581"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<textField>
+				<reportElement positionType="Float" style="B1" x="0" y="58" width="110" height="15" uuid="1b635694-6de1-4d8a-b961-001d92540c88"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{opening_balance})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" style="B2"  x="276" y="58" width="92" height="15" uuid="4f324e9c-0cac-40f1-be3c-a9ef7204077b"/>
+				<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{opening_balance_date})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B2"  x="371" y="58" width="89" height="15" uuid="829a6964-efab-4f57-9b62-785b24239b78"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{opening_balance_amount}==null?"-":$V{NumberFormatter}.format($F{opening_balance_amount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B1" x="0" y="73" width="110" height="15" uuid="c25cdd63-3cfa-49a4-9575-e00c5026d9d0"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{payment_amounts}) + "‡"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" style="B2"  x="371" y="73" width="89" height="15" uuid="fdd1270c-237f-4af0-bcea-8e170a2ee483"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{paymentAmount}==null?"-":$V{NumberFormatter}.format($V{paymentAmount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B1" x="0" y="88" width="110" height="15" uuid="1704275b-08e9-46f8-ae1b-5ed02920edba"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{advances}) + "‡‡"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" style="B2"  x="371" y="88" width="89" height="15" uuid="fd34c398-6338-4e0b-8de9-d42c0c21afca"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{advances}==null?"-":$V{NumberFormatter}.format($V{advances})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B1" x="0" y="103" width="110" height="15" uuid="ea74ba0c-e16f-48af-86ab-0295d8d1a8b5"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{net_payable_royalties})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B2"  x="371" y="103" width="89" height="15" uuid="ef503ed7-5dd5-4fcd-81c3-449836ff68da"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{NumberFormatter}.format(($F{gross_amount}==null?0:$F{gross_amount}) + ($F{withholding_tax_amount}==null?0:$F{withholding_tax_amount}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B3" x="18" y="118" width="110" height="15" uuid="9e0e2afd-e75f-4359-bb68-791af6cb38fc"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{gross_payable_royalties})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" style="B2"  x="276" y="118" width="92" height="15" uuid="4f324e9c-0cac-40f1-be3c-a9ef7204077d"/>
+				<textElement>
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{gross_date})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B2"  x="371" y="118" width="89" height="15" uuid="19b611fb-d04b-46af-abf1-58c79e853bd3"/>
+				<textElement textAlignment="Right">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gross_amount}==null?"-":$V{NumberFormatter}.format($F{gross_amount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B3" x="18" y="133" width="110" height="15" uuid="a1c99c6f-a2b7-498e-93ef-a89871d8790e"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{withholding_tax})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" style="B2"  x="276" y="133" width="92" height="15" uuid="4f324e9c-0cac-40f1-be3c-a9ef7204077e"/>
+				<textElement>
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{withholding_tax_date})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B2" x="371" y="133" width="89" height="15" uuid="098c1627-2825-4f47-a588-bdf8f55436cb"/>
+				<textElement textAlignment="Right">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{withholding_tax_amount}==null?"-":$V{NumberFormatter}.format($F{withholding_tax_amount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B1" x="0" y="148" width="110" height="15" uuid="4bb9e54d-c26c-4740-ad78-544238b39dd2"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{adjustments}) + "‡‡‡"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" style="B2"  x="371" y="148" width="89" height="15" uuid="35408a50-315a-4a55-b1ad-05defd2170c9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{adjustments}==null?"-":$V{NumberFormatter}.format($V{adjustments})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" style="B1B" x="0" y="163" width="110" height="15" uuid="ad0022c8-5826-4236-a244-6d6732fa0c35"/>
+				<textFieldExpression><![CDATA[Utils.utfFormatter($R{closing_balance})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" style="B2"  x="276" y="163" width="92" height="15" uuid="a70bb5b2-48d5-43f4-91d7-106b16e6f814"/>
+				<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{closing_balance_date})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" style="B2B"  x="371" y="163" width="89" height="15" uuid="0911c634-2e19-4c07-8197-eef2aac417fd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{closing_balance_amount}==null?"-":$V{NumberFormatter}.format($F{closing_balance_amount})]]></textFieldExpression>
+			</textField>
+            <textField>
+				<reportElement style="H2" positionType="Float" x="0" y="196" width="462" height="20" uuid="405f17cb-39ab-469c-86b4-25da504c8e70"/>
+				<textFieldExpression><![CDATA["‡" + Utils.utfFormatter($R{payment_details})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="216" width="462" height="1" uuid="f749f6c1-ee6a-446e-b7da-b5aa7d673390"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="221" width="462" height="15" uuid="93898957-8ce1-4c4e-9f30-bb3df079d8fe">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="PaymentAmount" uuid="e43dab72-f682-456b-8dbf-83235528a476">
+						<datasetParameter name="net.sf.jasperreports.json.source">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="net.sf.jasperreports.json.date.pattern">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="net.sf.jasperreports.json.number.pattern">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="JSON_LOCALE">
+							<datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="JSON_TIME_ZONE">
+							<datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<returnValue fromVariable="total_paymentAmount" toVariable="paymentAmount"/>
+					</datasetRun>
+					<jr:column width="276" uuid="8d9a203f-590c-429c-8ee7-a30f41ef5682">
+						<jr:detailCell height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B1" x="0" y="0" width="276" height="15" uuid="f2a22e4f-b527-4a7a-ab48-acb39fb7c951"/>
+								<textFieldExpression><![CDATA[$F{paymentAmount_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="86672a5b-44dc-4ad9-8c8c-8682d545704d">
+						<jr:detailCell height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B2" x="0" y="0" width="95" height="15" uuid="23c4e99a-6949-46f7-9b1a-9a068e094fe7"/>
+								<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{paymentAmount_date})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="51422a6a-9a44-44aa-943d-025e02d6665f">
+						<jr:detailCell height="15">
+							<textField>
+								<reportElement style="B2" x="0" y="0" width="89" height="15" uuid="023d18cc-3a37-4309-82e0-f678b692b11e"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{paymentAmount_amount}==null?"-":$V{NumberFormatter}.format($F{paymentAmount_amount})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+            <textField>
+				<reportElement style="H2" positionType="Float" x="0" y="244" width="462" height="20" uuid="405f17cb-39ab-469c-86b4-25da504c8e70"/>
+				<textFieldExpression><![CDATA["‡‡" + Utils.utfFormatter($R{advance_details})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="264" width="462" height="1" uuid="f749f6c1-ee6a-446e-b7da-b5aa7d673390"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="269" width="462" height="15" uuid="93898957-8ce1-4c4e-9f30-bb3df079d8fe">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Advances" uuid="e43dab72-f682-456b-8dbf-83235528a476">
+						<datasetParameter name="net.sf.jasperreports.json.source">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="net.sf.jasperreports.json.date.pattern">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="net.sf.jasperreports.json.number.pattern">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="JSON_LOCALE">
+							<datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="JSON_TIME_ZONE">
+							<datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<returnValue fromVariable="total_advances" toVariable="advances"/>
+					</datasetRun>
+					<jr:column width="276" uuid="8d9a203f-590c-429c-8ee7-a30f41ef5682">
+						<jr:detailCell height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B1" x="0" y="0" width="276" height="15" uuid="f2a22e4f-b527-4a7a-ab48-acb39fb7c951"/>
+								<textFieldExpression><![CDATA[$F{advances_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="86672a5b-44dc-4ad9-8c8c-8682d545704d">
+						<jr:detailCell height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B2" x="0" y="0" width="95" height="15" uuid="23c4e99a-6949-46f7-9b1a-9a068e094fe7"/>
+								<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{advances_date})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="51422a6a-9a44-44aa-943d-025e02d6665f">
+						<jr:detailCell height="15">
+							<textField>
+								<reportElement style="B2" x="0" y="0" width="89" height="15" uuid="023d18cc-3a37-4309-82e0-f678b692b11e"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{advances_amount}==null?"-":$V{NumberFormatter}.format($F{advances_amount})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement style="H2" positionType="Float" x="0" y="292" width="462" height="20" uuid="33ca3826-4f0a-42ce-ad2f-49d01dde452f"/>
+				<textFieldExpression><![CDATA["‡‡‡" + Utils.utfFormatter($R{adjustment_details})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="312" width="462" height="1" uuid="d539465b-07cb-4f98-8719-1138453e1182"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+			</line>
+			<componentElement>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="317" width="462" height="15" isPrintWhenDetailOverflows="true" uuid="f4229f47-a4cd-45cf-8d7a-cc4fea25c4f0">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Adjustments" uuid="a64d1ceb-a479-466d-9dcb-9a79145ba3d2">
+						<datasetParameter name="net.sf.jasperreports.json.source">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.source}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="net.sf.jasperreports.json.date.pattern">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.date.pattern}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="net.sf.jasperreports.json.number.pattern">
+							<datasetParameterExpression><![CDATA[$P{net.sf.jasperreports.json.number.pattern}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="JSON_LOCALE">
+							<datasetParameterExpression><![CDATA[$P{JSON_LOCALE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="JSON_TIME_ZONE">
+							<datasetParameterExpression><![CDATA[$P{JSON_TIME_ZONE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<returnValue fromVariable="total_adjustments" toVariable="adjustments"/>
+					</datasetRun>
+					<jr:column width="276" uuid="80c6c2ec-bbd9-4b93-9218-1d5c3d2e8cbe">
+						<jr:detailCell height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B1" x="0" y="0" width="276" height="15" uuid="aeca4665-6d60-470c-95d2-bd671909e693"/>
+								<textFieldExpression><![CDATA[$F{adjustments_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="8f3a8538-bc77-4070-ae8e-fb77efec2021">
+						<jr:detailCell height="15">
+							<textField isBlankWhenNull="true">
+								<reportElement style="B2" x="0" y="0" width="95" height="15" uuid="2d52b51d-d4a2-4bbf-a339-6299cc64ae61"/>
+								<textFieldExpression><![CDATA[$V{DateFormatter}.format($F{adjustments_date})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="1456ea78-be59-4468-b5fd-5e28c2813803">
+						<jr:detailCell height="15">
+							<textField>
+								<reportElement style="B2" x="0" y="0" width="89" height="15" uuid="56b02ecb-c364-465d-911f-2f805dc2b961"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{adjustments_amount}==null?"-":$V{NumberFormatter}.format($F{adjustments_amount})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

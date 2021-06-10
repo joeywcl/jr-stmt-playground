@@ -172,7 +172,7 @@
 			<textField evaluationTime="Report">
 				<reportElement style="B2" positionType="Float" x="371" y="88" width="89" height="15" uuid="fd34c398-6338-4e0b-8de9-d42c0c21afca"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{advances}==null?"HOLALALALA":$V{advances}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{advances}==null?"-":$V{advances}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="B1" positionType="Float" x="0" y="103" width="110" height="15" uuid="ea74ba0c-e16f-48af-86ab-0295d8d1a8b5"/>
